@@ -581,6 +581,146 @@
     color: var(--purple-deep);
   }
 
+  /* Big character portrait in scene */
+  .character-stage {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: -3rem auto 0;
+    padding-bottom: 0.5rem;
+  }
+  .character-portrait-wrap {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(255,255,255,0.98), rgba(255,228,243,0.95));
+    border: 5px solid white;
+    box-shadow: 
+      0 0 0 4px var(--pink-3), 
+      0 0 0 7px white,
+      0 0 35px rgba(255,107,181,0.6),
+      0 0 60px rgba(184,134,255,0.4),
+      0 14px 30px rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    animation: portraitBob 3s ease-in-out infinite;
+    z-index: 5;
+    position: relative;
+  }
+  @keyframes portraitBob {
+    0%, 100% { transform: translateY(0) rotate(-1.5deg); }
+    50% { transform: translateY(-7px) rotate(1.5deg); }
+  }
+  .character-portrait-wrap img {
+    width: 130%;  /* leggermente più grande del cerchio per riempirlo bene */
+    height: 130%;
+    object-fit: cover;
+    object-position: center top;  /* mostra la faccia non il corpo */
+    border-radius: 50%;
+    display: block;
+  }
+  .character-portrait-wrap svg {
+    width: 100%;
+    height: 100%;
+  }
+  /* Sparkle ring effect */
+  .character-portrait-wrap::before {
+    content: '✨';
+    position: absolute;
+    top: -10px; right: -10px;
+    font-size: 1.5rem;
+    z-index: 6;
+    animation: sparkleRot 4s linear infinite;
+  }
+  .character-portrait-wrap::after {
+    content: '⭐';
+    position: absolute;
+    bottom: -8px; left: -8px;
+    font-size: 1.2rem;
+    z-index: 6;
+    animation: sparkleRot 4s 2s linear infinite;
+  }
+  @keyframes sparkleRot {
+    0%, 100% { transform: scale(1) rotate(0); opacity: 0.9; }
+    50% { transform: scale(1.3) rotate(180deg); opacity: 1; }
+  }
+  .character-nameplate {
+    margin-top: -0.4rem;
+    background: linear-gradient(135deg, var(--pink-3), var(--pink-deep));
+    color: white;
+    padding: 0.3rem 1rem;
+    border-radius: 999px;
+    font-family: 'Bungee', cursive;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4), 0 0 0 3px white;
+    white-space: nowrap;
+    text-shadow: 1px 1px 0 var(--purple-deep);
+  }
+  .character-role {
+    margin-top: 0.3rem;
+    font-family: 'Caveat', cursive;
+    color: var(--purple-deep);
+    font-size: 0.95rem;
+    font-style: italic;
+  }
+
+  /* MANGA SPEECH BUBBLE */
+  .speech-bubble {
+    position: relative;
+    background: white;
+    border: 3px solid var(--pink-3);
+    border-radius: 22px;
+    padding: 1rem 1.1rem 0.9rem;
+    margin: 1rem 0 0.5rem;
+    box-shadow: 0 6px 20px rgba(255,107,181,0.3), 0 0 0 2px rgba(255,255,255,0.5);
+    animation: bubbleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes bubbleIn {
+    0% { transform: scale(0.6); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  /* Tail of the speech bubble */
+  .speech-bubble::before {
+    content: '';
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 14px solid transparent;
+    border-right: 14px solid transparent;
+    border-bottom: 18px solid var(--pink-3);
+  }
+  .speech-bubble::after {
+    content: '';
+    position: absolute;
+    top: -13px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 11px solid transparent;
+    border-right: 11px solid transparent;
+    border-bottom: 14px solid white;
+  }
+  /* Sparkle decorations on bubble */
+  .speech-bubble .sparkle-deco-1 {
+    position: absolute;
+    top: -8px; right: 8px;
+    font-size: 1.2rem;
+    animation: twinkle 2s ease-in-out infinite;
+  }
+  .speech-bubble .sparkle-deco-2 {
+    position: absolute;
+    bottom: -6px; left: 12px;
+    font-size: 0.9rem;
+    animation: twinkle 2s 0.5s ease-in-out infinite;
+  }
+
   /* Story text — clickable words */
   .story-text {
     font-family: 'Patrick Hand', cursive;
@@ -1003,6 +1143,97 @@
     animation: none;
   }
 
+  /* ===== READALOUD PUZZLE (Ello-style fluency) ===== */
+  .ra-instruction {
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    color: var(--purple-deep);
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+  .ra-sentence {
+    background: white;
+    border: 3px solid var(--pink-2);
+    border-radius: 14px;
+    padding: 0.9rem 0.7rem;
+    margin: 0.5rem 0;
+    text-align: center;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.4rem;
+    line-height: 1.7;
+    color: var(--ink);
+    box-shadow: 0 4px 0 var(--pink-2);
+    min-height: 80px;
+  }
+  .ra-word {
+    display: inline-block;
+    margin: 0.1em 0.15em;
+    padding: 0.1em 0.2em;
+    border-radius: 6px;
+    transition: all 0.3s;
+    color: #999;
+  }
+  .ra-word.correct {
+    background: #a8f5d6;
+    color: #2d8b5d;
+    font-weight: 700;
+    transform: scale(1.1);
+    animation: raPop 0.3s;
+  }
+  .ra-word.current {
+    background: var(--gold);
+    color: var(--ink);
+    animation: raCurrent 1s ease-in-out infinite;
+  }
+  @keyframes raPop {
+    0% { transform: scale(1.3); }
+    100% { transform: scale(1.1); }
+  }
+  @keyframes raCurrent {
+    0%, 100% { background: var(--gold); }
+    50% { background: var(--gold-light); }
+  }
+  .ra-mic-big {
+    width: 86px; height: 86px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, var(--pink-3), var(--pink-deep));
+    color: white;
+    font-size: 2.4rem;
+    margin: 0.6rem auto;
+    border: 4px solid var(--pink-deep);
+    box-shadow: 0 6px 0 var(--pink-deep), 0 0 0 6px rgba(255,107,181,0.3);
+    display: block;
+    transition: all 0.15s;
+  }
+  .ra-mic-big.listening {
+    animation: raMicPulse 1.2s ease-in-out infinite;
+  }
+  @keyframes raMicPulse {
+    0%, 100% { box-shadow: 0 6px 0 var(--pink-deep), 0 0 0 6px rgba(255,107,181,0.3); transform: scale(1); }
+    50% { box-shadow: 0 6px 0 var(--pink-deep), 0 0 0 26px rgba(255,107,181,0); transform: scale(1.05); }
+  }
+  .ra-score {
+    text-align: center;
+    margin: 0.6rem 0;
+    font-family: 'Bungee', cursive;
+    font-size: 1.4rem;
+    color: var(--pink-deep);
+    text-shadow: 2px 2px 0 var(--gold);
+  }
+  .ra-stars {
+    display: flex;
+    justify-content: center;
+    gap: 0.3rem;
+    margin: 0.4rem 0;
+    font-size: 2rem;
+  }
+  .ra-star-empty { opacity: 0.3; filter: grayscale(1); }
+  .ra-star-filled { animation: raStar 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  @keyframes raStar {
+    0% { transform: scale(0) rotate(-180deg); }
+    100% { transform: scale(1) rotate(0); }
+  }
+
   /* TRUEFALSE buttons */
   .tf-row {
     display: grid;
@@ -1154,6 +1385,73 @@
     font-size: 1.2rem;
   }
   .treasure.empty:hover { transform: none; }
+
+  /* ===== VOCABULARY TREE PANEL ===== */
+  .vocab-tree-wrap {
+    padding: 1rem;
+    text-align: center;
+  }
+  .vocab-tree-svg {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+  }
+  .vocab-stats {
+    background: rgba(255,255,255,0.1);
+    border-radius: 14px;
+    padding: 0.7rem;
+    margin: 0.5rem auto;
+    max-width: 360px;
+    color: white;
+    font-family: 'Caveat', cursive;
+    font-size: 1.15rem;
+    line-height: 1.4;
+  }
+  .vocab-stats strong {
+    color: var(--gold);
+    font-family: 'Bungee', cursive;
+    font-size: 1.3rem;
+  }
+  .vocab-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    justify-content: center;
+    padding: 1rem;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  .vocab-word {
+    background: linear-gradient(135deg, white, var(--pink-1));
+    border: 2px solid var(--pink-3);
+    border-radius: 999px;
+    padding: 0.3rem 0.8rem;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1rem;
+    color: var(--ink);
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 3px 0 var(--pink-3);
+  }
+  .vocab-word:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 0 var(--pink-3);
+  }
+  .vocab-word.mastered {
+    background: linear-gradient(135deg, var(--mint), #88d4a4);
+    border-color: #4dc78a;
+    box-shadow: 0 3px 0 #4dc78a;
+  }
+  .vocab-empty {
+    color: white;
+    font-family: 'Caveat', cursive;
+    font-size: 1.3rem;
+    text-align: center;
+    padding: 2rem;
+    line-height: 1.5;
+  }
 
   /* Letters list */
   .letters {
@@ -1477,6 +1775,10 @@
     .hotspot-ring { font-size: 1.4rem; }
   }
 </style>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="version" content="2026-05-08-portraits-v1">
 </head>
 <body>
 
@@ -1515,6 +1817,9 @@
       </button>
       <button class="hud-icon" onclick="showLetters()" title="Mes lettres">
         💌<span class="badge" id="lettersBadge" style="display:none">0</span>
+      </button>
+      <button class="hud-icon" onclick="showVocabTree()" title="Mon arbre des mots">
+        🌳<span class="badge" id="vocabBadge" style="display:none">0</span>
       </button>
       <button class="hud-icon" onclick="toggleSky()" title="Jour / Nuit" id="dayNightBtn">
         ☀️
@@ -1574,6 +1879,16 @@
     <p>Tes amis t'écrivent !</p>
   </div>
   <div class="letters" id="lettersList"></div>
+</div>
+
+<!-- VOCABULARY TREE PANEL -->
+<div class="panel" id="vocabPanel">
+  <button class="panel-close" onclick="hidePanels()">✕</button>
+  <div class="panel-header">
+    <h2>🌳 MON ARBRE DES MOTS</h2>
+    <p>Les mots que j'ai appris !</p>
+  </div>
+  <div id="vocabPanelContent"></div>
 </div>
 
 <!-- CELEBRATION -->
@@ -1638,6 +1953,10 @@ let unlockedLetters = JSON.parse(localStorage.getItem('lettersI') || '[]');
 let readLetters = JSON.parse(localStorage.getItem('readLettersI') || '[]');
 let lastDayBottle = localStorage.getItem('lastDayBottleI') || '';
 let isNight = JSON.parse(localStorage.getItem('isNightI') || 'false');
+let vocabulary = JSON.parse(localStorage.getItem('vocabularyI') || '{}'); // { word: { count, firstSeen } }
+let placementLevel = parseInt(localStorage.getItem('placementLevelI') || '0'); // 0=untested, 1=easy, 2=med, 3=hard
+let helpUsedCount = 0; // Aiuti usati nella sessione corrente (per placement)
+let perfectAnswersCount = 0; // Risposte azzeccate al primo colpo
 
 /* ============================================================
    VOICE
@@ -1725,6 +2044,32 @@ function sndTreasure() { [523, 659, 784, 1047, 1319].forEach((f, i) => setTimeou
 function sndLetter() { playTone(880, 0.08, 'sine', 0.1); setTimeout(() => playTone(1100, 0.12, 'sine', 0.12), 100); }
 function sndMagic() { [659, 880, 1047, 1319, 1568].forEach((f, i) => setTimeout(() => playTone(f, 0.15, 'sine', 0.12), i * 60)); }
 
+// ============ VOCABULARY (Arbre des Mots) ============
+function addVocabulary(word) {
+  if (!word || word.length < 2) return;
+  const clean = word.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z']/g, '');
+  if (clean.length < 2) return;
+  const skipWords = ['le','la','les','un','une','des','de','du','et','est','a','à','au','aux','en','on','y','ce','ça','si','ne','pas','que','qui','plus','très','tu','je','il','elle','nous','vous','ils','elles','me','te','se','mon','ma','mes','ton','ta','tes','son','sa','ses','par','pour','sur','dans','avec','sans','sous','ou','où','car','mais','comme','quand','donc','aussi','tout','tous','toute','toutes'];
+  if (skipWords.includes(clean)) return;
+  if (!vocabulary[clean]) vocabulary[clean] = { count: 0, firstSeen: Date.now() };
+  vocabulary[clean].count++;
+  vocabulary[clean].lastSeen = Date.now();
+  localStorage.setItem('vocabularyI', JSON.stringify(vocabulary));
+  updateVocabBadge();
+}
+
+function updateVocabBadge() {
+  const b = document.getElementById('vocabBadge');
+  if (!b) return;
+  const count = Object.keys(vocabulary).length;
+  if (count > 0) {
+    b.style.display = 'flex';
+    b.textContent = count;
+  } else {
+    b.style.display = 'none';
+  }
+}
+
 function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 function shuffle(arr) {
   const a = [...arr];
@@ -1797,10 +2142,10 @@ const STORIES = [
     zone: 'castle',
     icon: '🦄',
     scenes: [
-      { speaker: 'etoile', text: 'Bonjour ! Moi c\'est Étoile la licorne. Bienvenue sur ton île magique ! Tu vas adorer ici.' },
-      { speaker: 'etoile', text: 'Mais... j\'ai perdu ma corne magique ! Sans elle je ne peux pas faire de magie.', puzzle: { type: 'choice', prompt: 'Où chercher la corne ?', options: [{ label: '🏰 Dans le château' }, { label: '🌊 Sur la plage' }] } },
+      { speaker: 'etoile', text: 'Coucou ma chère PRINCESSE ! 🦄✨ Moi c\'est Étoile, la licorne de l\'île. Bienvenue chez toi ! C\'est trop merveilleux que tu sois là !' },
+      { speaker: 'etoile', text: 'Oh non PRINCESSE... j\'ai perdu ma corne magique ! 😢 Sans elle, plus de magie sur l\'île. Tu m\'aides à la chercher ?', puzzle: { type: 'choice', prompt: 'Où chercher la corne ?', options: [{ label: '🏰 Dans le château' }, { label: '🌊 Sur la plage' }] } },
       { speaker: 'etoile', text: 'On la cherche ensemble ! Touche les mots pour lire avec moi.', puzzle: { type: 'letter', prompt: 'Quelle lettre se cache ?', word: 'CORNE', hideIdx: 0, options: ['C','K','G','Q'], correct: 'C' } },
-      { speaker: 'etoile', text: 'On l\'a trouvée ! Elle brille comme une étoile. Merci PRINCESSE !' }
+      { speaker: 'etoile', text: 'YAAAAY ! 🦄✨ On l\'a TROUVÉE ! Elle brille comme une étoile ! Merci PRINCESSE !', puzzle: { type: 'readaloud', prompt: 'Lis cette phrase magique à voix haute :', sentence: 'Étoile la licorne est mon amie.' } }
     ],
     reward: { emoji: '🦄', name: 'Corne d\'Étoile', label: 'La corne magique d\'Étoile, elle scintille rose et or.' },
     finalLetter: { from: '🦄 Étoile', body: 'Coucou PRINCESSE ! Grâce à toi j\'ai retrouvé ma corne ! Maintenant je peux faire de la magie partout sur l\'île. Bisous magiques !' }
@@ -1811,9 +2156,9 @@ const STORIES = [
     zone: 'pop',
     icon: '🎤',
     scenes: [
-      { speaker: 'lulu', text: 'Salut PRINCESSE ! Moi c\'est Rumi du groupe HUNTR/X. On a un concert ce soir mais... j\'ai perdu mon micro rose !' },
-      { speaker: 'mimi', text: 'Sans micro pas de chanson ! Aide-nous PRINCESSE !', puzzle: { type: 'letter', prompt: 'Lis : MI_RO', word: 'MICRO', hideIdx: 2, options: ['C','K','S','T'], correct: 'C' } },
-      { speaker: 'jojo', text: 'Je crois qu\'il est dans le placard ! Mais le placard est fermé. Il faut dire le mot magique !', puzzle: { type: 'fillblank', prompt: 'Complète la phrase de Rumi :', sentence: 'Pour ouvrir le placard il faut dire ___ !', answer: 'OUVRE', distractors: ['FERME','VIENS'] } },
+      { speaker: 'lulu', text: 'Coucou PRINCESSE ! 💖 C\'est moi, Rumi de HUNTR/X ! Tu veux bien m\'aider ? J\'ai un concert ce soir et mon micro rose a disparu !' },
+      { speaker: 'mimi', text: 'Pas de micro, pas de show. PRINCESSE, on compte sur toi.', puzzle: { type: 'letter', prompt: 'Lis : MI_RO', word: 'MICRO', hideIdx: 2, options: ['C','K','S','T'], correct: 'C' } },
+      { speaker: 'jojo', text: 'PRINCESSE !! Je pense qu\'il est dans le placard ! Mais il est fermé !! Le mot magique, vite !', puzzle: { type: 'fillblank', prompt: 'Complète la phrase de Rumi :', sentence: 'Pour ouvrir le placard il faut dire ___ !', answer: 'OUVRE', distractors: ['FERME','VIENS'] } },
       { speaker: 'lulu', text: 'Le placard s\'ouvre ! Mon micro est là ! Tu es la meilleure PRINCESSE !' }
     ],
     reward: { emoji: '🎤', name: 'Le Micro de Rumi', label: 'Un micro rose qui fait sortir des cœurs quand on chante.' },
@@ -1825,9 +2170,9 @@ const STORIES = [
     zone: 'monster',
     icon: '🦇',
     scenes: [
-      { speaker: 'vampi', text: 'Coucou PRINCESSE ! Aujourd\'hui c\'est mon anniversaire ! Je veux organiser une fête !' },
-      { speaker: 'lupa', text: 'Mais on n\'a pas de gâteau ! Léon le boulanger peut nous en faire un !', puzzle: { type: 'choice', prompt: 'Quel gâteau pour Draculaura ?', options: [{ label: '🍫 Gâteau au chocolat' }, { label: '🍓 Gâteau aux fraises' }] } },
-      { speaker: 'sketty', text: 'Hihi ! On va le commander vite !', puzzle: { type: 'findword', prompt: 'Trouve le mot "gâteau" :', word: 'GATEAU', distractors: ['BATEAU','CHATEAU','PLATEAU'] } },
+      { speaker: 'vampi', text: 'PRINCESSE !! 💖 Aujourd\'hui c\'est mon anniversaire ! Tu viens à ma fête, hein, hein, hein ?' },
+      { speaker: 'lupa', text: 'PRINCESSE on a un PROBLÈME. Pas de gâteau pour Draculaura ! Léon peut nous sauver, allons-y !', puzzle: { type: 'choice', prompt: 'Quel gâteau pour Draculaura ?', options: [{ label: '🍫 Gâteau au chocolat' }, { label: '🍓 Gâteau aux fraises' }] } },
+      { speaker: 'sketty', text: 'BZZT ! PRINCESSE on commande VITE ! Mon électricité est trop excitée !', puzzle: { type: 'findword', prompt: 'Trouve le mot "gâteau" :', word: 'GATEAU', distractors: ['BATEAU','CHATEAU','PLATEAU'] } },
       { speaker: 'vampi', text: 'YES ! Le gâteau arrive ! On souffle les bougies tous ensemble !' }
     ],
     reward: { emoji: '🎂', name: 'Le Gâteau de Draculaura', label: 'Un gâteau noir avec des cœurs roses et des bougies violettes.' },
@@ -1839,7 +2184,7 @@ const STORIES = [
     zone: 'phare',
     icon: '🌙',
     scenes: [
-      { speaker: 'lune', text: 'PRINCESSE ! Je suis Capitaine Lune. La lampe du phare ne marche plus ! Les bateaux vont se perdre !' },
+      { speaker: 'lune', text: 'Ah ma chère PRINCESSE ! Je suis Capitaine Lune. La lumière du phare s\'est éteinte... Les bateaux risquent de se perdre dans la nuit. Tu m\'aides ?' },
       { speaker: 'lune', text: 'Il faut allumer la grande étoile au sommet du phare !', puzzle: { type: 'syllable', prompt: 'Touche les syllabes du mot magique :', word: 'LUMIERE', syllables: ['LU','MI','ERE'] } },
       { speaker: 'lune', text: 'Bravo ! La lumière revient !', puzzle: { type: 'comprehension', prompt: 'Lis et réponds :', question: 'Qu\'est-ce que le phare aide ?', options: [{ label: '🚢 Les bateaux', correct: true }, { label: '🚗 Les voitures' }, { label: '🚲 Les vélos' }] } },
       { speaker: 'lune', text: 'Tu as sauvé tous les bateaux !' }
@@ -1853,7 +2198,7 @@ const STORIES = [
     zone: 'marche',
     icon: '🥖',
     scenes: [
-      { speaker: 'leon', text: 'Au voleur ! Quelqu\'un a volé ma plus belle baguette ! PRINCESSE, aide-moi !' },
+      { speaker: 'leon', text: 'AU VOLEUR ! Sapristi ! Quelqu\'un a pris ma plus belle baguette ! Oh ma chère PRINCESSE, je suis désespéré !' },
       { speaker: 'leon', text: 'J\'ai vu des miettes par terre. Suis les miettes !', puzzle: { type: 'choice', prompt: 'Où mènent les miettes ?', options: [{ label: '🌳 Vers la forêt' }, { label: '🏰 Vers le château' }] } },
       { speaker: 'sketty', text: 'Hihi ! C\'est moi qui ai pris la baguette ! J\'avais faim !', puzzle: { type: 'letter', prompt: 'Quelle lettre ?', word: 'PAIN', hideIdx: 0, options: ['P','B','D','M'], correct: 'P' } },
       { speaker: 'leon', text: 'Frankie, la prochaine fois demande gentiment !' }
@@ -1906,7 +2251,7 @@ const STORIES = [
     zone: 'monster',
     icon: '💀',
     scenes: [
-      { speaker: 'sketty', text: 'PRINCESSE ! Je veux danser le K-pop ! Mes os font CLAC CLAC !' },
+      { speaker: 'sketty', text: 'BZZT BZZT PRINCESSE ! ⚡ J\'ai trop envie de danser le K-pop comme HUNTR/X !! Mais mes os font CLAC CLAC ! Au secours !' },
       { speaker: 'lulu', text: 'Coucou Frankie ! Je vais t\'apprendre.', puzzle: { type: 'syllable', prompt: 'Touche les syllabes :', word: 'DANSER', syllables: ['DAN','SER'] } },
       { speaker: 'sketty', text: 'Hihi ! Je veux apprendre une nouvelle position !', puzzle: { type: 'choice', prompt: 'Quelle position ?', options: [{ label: '✨ Le saut étoile' }, { label: '🌀 Le tour magique' }] } },
       { speaker: 'sketty', text: 'YESSSS ! Je suis le squelette le plus cool !' }
@@ -1989,10 +2334,10 @@ const STORIES = [
     zone: 'addams',
     icon: '🖤',
     scenes: [
-      { speaker: 'mercredi', text: 'Bonjour. Je m\'appelle Mercredi Addams. Ma famille a déménagé sur ton île. C\'est lugubre. J\'adore.' },
-      { speaker: 'mercredi', text: 'Je veux une amie qui n\'a pas peur du noir. Toi tu n\'as pas peur ?', puzzle: { type: 'speak', prompt: 'Dis : "Pas peur !"', word: 'peur', accept: ['peur','pas peur','je n\'ai pas peur'] } },
-      { speaker: 'mercredi', text: 'Bien. Quel est ton nom alors ?', puzzle: { type: 'letter', prompt: 'Écris la première lettre de ton nom :', word: 'GINEVRA', hideIdx: 0, options: ['G','J','D','B'], correct: 'G' } },
-      { speaker: 'mercredi', text: 'GINEVRA. Bienvenue dans ma famille. Viens visiter le manoir.' }
+      { speaker: 'mercredi', text: 'Bonjour PRINCESSE. Je suis Mercredi Addams. Ma famille vit sur ton île maintenant. C\'est lugubre ici. J\'aime.' },
+      { speaker: 'mercredi', text: 'Je cherche une amie courageuse. Toi PRINCESSE, tu n\'as pas peur du noir ?', puzzle: { type: 'speak', prompt: 'Dis : "Pas peur !"', word: 'peur', accept: ['peur','pas peur','je n\'ai pas peur'] } },
+      { speaker: 'mercredi', text: 'Bien. Maintenant dis-moi ton nom.', puzzle: { type: 'letter', prompt: 'Écris la première lettre de ton nom :', word: 'GINEVRA', hideIdx: 0, options: ['G','J','D','B'], correct: 'G' } },
+      { speaker: 'mercredi', text: 'Tu es des nôtres maintenant.', puzzle: { type: 'readaloud', prompt: 'Lis bravement à voix haute :', sentence: 'Mercredi et moi sommes amies.' } }
     ],
     reward: { emoji: '🖤', name: 'Le Cœur Noir de Mercredi', label: 'Un cœur noir avec un ruban violet, le préféré de Mercredi.' },
     finalLetter: { from: '🖤 Mercredi Addams', body: 'GINEVRA. Tu es la première amie qui n\'a pas peur. Viens danser avec moi à minuit. Mortellement tienne, Mercredi.' }
@@ -2005,8 +2350,8 @@ const STORIES = [
     zone: 'addams',
     icon: '💣',
     scenes: [
-      { speaker: 'pugsley', text: 'Salut PRINCESSE ! Je suis Pugsley. J\'ai fabriqué une bombe géante ! Mercredi veut la faire exploser.' },
-      { speaker: 'mercredi', text: 'On a besoin du mot magique pour l\'allumer.', puzzle: { type: 'fillblank', prompt: 'Complète :', sentence: 'La bombe fait ___ !', answer: 'BOUM', distractors: ['MIAOU','POP'] } },
+      { speaker: 'pugsley', text: 'PRINCESSE !! Regarde regarde !! Je suis Pugsley et j\'ai fabriqué une bombe GÉANTE ! 💣💥 Mercredi veut qu\'on la fasse péter !' },
+      { speaker: 'mercredi', text: 'PRINCESSE. Pour allumer la mèche, il faut un mot magique. Concentre-toi.', puzzle: { type: 'fillblank', prompt: 'Complète :', sentence: 'La bombe fait ___ !', answer: 'BOUM', distractors: ['MIAOU','POP'] } },
       { speaker: 'pugsley', text: 'Génial ! Maintenant on choisit où l\'envoyer !', puzzle: { type: 'choice', prompt: 'Où on l\'envoie ?', options: [{ label: '🌳 Dans la forêt' }, { label: '☁️ Dans le ciel' }] } },
       { speaker: 'pugsley', text: 'BOUM ! Des étoiles partout dans le ciel ! Trop beau !' }
     ],
@@ -2020,8 +2365,8 @@ const STORIES = [
     zone: 'addams',
     icon: '✋',
     scenes: [
-      { speaker: 'chose', text: '*tap tap tap* (La Chose tape sur la table pour t\'appeler PRINCESSE !)' },
-      { speaker: 'mercredi', text: 'La Chose veut t\'apprendre à claquer des doigts. C\'est la Famille Addams !', puzzle: { type: 'speak', prompt: 'Dis : "Clic clic !"', word: 'clic', accept: ['clic','clic clic','klick'] } },
+      { speaker: 'chose', text: '*tap tap tap* 👋 La Chose tape sur la table ! Elle veut te dire bonjour PRINCESSE ! *tap tap*' },
+      { speaker: 'mercredi', text: 'PRINCESSE. La Chose va t\'apprendre LA chanson de la Famille Addams. *Clic clic*. C\'est sacré.', puzzle: { type: 'speak', prompt: 'Dis : "Clic clic !"', word: 'clic', accept: ['clic','clic clic','klick'] } },
       { speaker: 'chose', text: '*claque-claque* Maintenant écris la chanson !', puzzle: { type: 'findword', prompt: 'Trouve "main" :', word: 'MAIN', distractors: ['MAIS','PAIN','BAIN'] } },
       { speaker: 'chose', text: '*La Chose te fait un high five !* Tu danses comme une vraie Addams !' }
     ],
@@ -2035,7 +2380,7 @@ const STORIES = [
     zone: 'addams',
     icon: '💡',
     scenes: [
-      { speaker: 'fetide', text: 'Coucou PRINCESSE ! Regarde ! Je mets une ampoule dans ma bouche... et... ZAP !' },
+      { speaker: 'fetide', text: 'Coucou PRINCESSE ! 💡⚡ Regarde regarde !! Je mets cette ampoule dans ma bouche et... BZZZAP ! Magique !' },
       { speaker: 'fetide', text: 'L\'ampoule s\'allume ! Mais Mercredi veut une couleur spéciale.', puzzle: { type: 'choice', prompt: 'Quelle couleur ?', options: [{ label: '💜 Violette' }, { label: '🟢 Verte gluante' }] } },
       { speaker: 'fetide', text: 'Pour faire briller plus fort, dis le mot magique !', puzzle: { type: 'letter', prompt: 'La lettre :', word: 'ZAP', hideIdx: 0, options: ['Z','S','J','N'], correct: 'Z' } },
       { speaker: 'fetide', text: 'ZAAAAP ! Le manoir tout entier brille ! Bravo PRINCESSE !' }
@@ -2051,7 +2396,7 @@ const STORIES = [
     icon: '🌙',
     scenes: [
       { speaker: 'rumi', text: 'PRINCESSE ! Les Saja Boys sont arrivés sur l\'île ! Ils chantent près de notre Pop Stage !' },
-      { speaker: 'jinu', text: 'Salut Rumi. Je suis Jinu. Tu chantes très bien. On peut faire un duo ?', puzzle: { type: 'choice', prompt: 'Que dit Rumi ?', options: [{ label: '🎤 Oui, on chante !' }, { label: '👋 Non merci !' }] } },
+      { speaker: 'jinu', text: 'Bonsoir Rumi... 🌙 Je suis Jinu. J\'ai écouté ta voix, elle est belle. PRINCESSE, on peut faire un duo, tu crois ?', puzzle: { type: 'choice', prompt: 'Que dit Rumi ?', options: [{ label: '🎤 Oui, on chante !' }, { label: '👋 Non merci !' }] } },
       { speaker: 'rumi', text: 'D\'accord ! Mais pour le duo il faut un titre !', puzzle: { type: 'comprehension', prompt: 'Lis bien :', question: 'Combien sont dans un duo ?', options: [{ label: '1 personne' }, { label: '2 personnes', correct: true }, { label: '3 personnes' }] } },
       { speaker: 'jinu', text: 'Notre duo est magnifique ! Maintenant on est amis pour toujours !' }
     ],
@@ -2066,10 +2411,10 @@ const STORIES = [
     zone: 'pop',
     icon: '🎭',
     scenes: [
-      { speaker: 'mystery', text: 'Bonjour PRINCESSE ! Mystery, danseur des Saja Boys. Je danse mais... j\'ai oublié les pas !' },
-      { speaker: 'baby', text: 'Moi c\'est Baby. Je suis le plus jeune. Aide Mystery !', puzzle: { type: 'letter', prompt: 'Le mot caché :', word: 'DANSE', hideIdx: 0, options: ['D','B','P','T'], correct: 'D' } },
-      { speaker: 'romance', text: 'Romance, le charmeur ! Maintenant on a besoin de musique !', puzzle: { type: 'truefalse', prompt: 'Lis :', sentence: 'Mystery est le danseur des Saja Boys.', correct: true } },
-      { speaker: 'abby', text: 'Abby, le sportif ! Tu nous as sauvés ! Les Saja Boys t\'aiment !' }
+      { speaker: 'mystery', text: 'Bonjour PRINCESSE... 🎭 Je suis Mystery. Je danse pour les Saja Boys, mais j\'ai oublié tous les pas ! Quelle catastrophe !' },
+      { speaker: 'baby', text: 'PRINCESSE !! 🍼 Moi c\'est Baby, le bébé du groupe ! Aide Mystery, il pleure presque !', puzzle: { type: 'letter', prompt: 'Le mot caché :', word: 'DANSE', hideIdx: 0, options: ['D','B','P','T'], correct: 'D' } },
+      { speaker: 'romance', text: '💖 PRINCESSE chérie... Je suis Romance, le charmeur des Saja Boys. Pour que mon cœur batte, il faut de la MUSIQUE !', puzzle: { type: 'truefalse', prompt: 'Lis :', sentence: 'Mystery est le danseur des Saja Boys.', correct: true } },
+      { speaker: 'abby', text: '💪 PRINCESSE !! Je suis Abby le sportif ! Tu nous as sauvés ! On va te porter en triomphe sur nos épaules !' }
     ],
     reward: { emoji: '🎭', name: 'Le Masque des Saja Boys', label: 'Un masque doré qui change de couleur quand on chante.' }
   },
@@ -2081,7 +2426,7 @@ const STORIES = [
     zone: 'monster',
     icon: '🦇',
     scenes: [
-      { speaker: 'draculaura', text: 'PRINCESSE ! Je suis végétarienne ! Pas de sang, juste du jus rouge !' },
+      { speaker: 'draculaura', text: 'PRINCESSE !! 💖 Tu sais quoi ? Je suis vampire végétarienne ! Pas de sang, juste du bon jus rouge ! On va au marché ensemble ?' },
       { speaker: 'draculaura', text: 'Léon le boulanger en a au marché. On y va ?', puzzle: { type: 'choice', prompt: 'Quel jus ?', options: [{ label: '🍎 Jus de pomme' }, { label: '🍓 Jus de fraise' }] } },
       { speaker: 'leon', text: 'Voilà Draculaura ! Mais comment on dit "merci" en monstre ?', puzzle: { type: 'fillblank', prompt: 'Complète :', sentence: 'Quand on dit "s\'il te plaît", on répond ___.', answer: 'MERCI', distractors: ['BONJOUR','PARDON'] } },
       { speaker: 'draculaura', text: 'MERCI Léon ! MERCI PRINCESSE ! Tu es ma meilleure amie !' }
@@ -2096,9 +2441,9 @@ const STORIES = [
     zone: 'monster',
     icon: '👑',
     scenes: [
-      { speaker: 'cleo', text: 'PRINCESSE ! Je suis Cleo de Nile, princesse des momies ! Je veux être REINE de Monster High !' },
+      { speaker: 'cleo', text: 'PRINCESSE chérie ! 👑✨ Je suis Cleo de Nile, princesse égyptienne ! J\'EXIGE de devenir REINE de Monster High ! Tu m\'aides ?' },
       { speaker: 'cleo', text: 'Pour être reine il faut une couronne en or !', puzzle: { type: 'findword', prompt: 'Trouve "OR" (le métal jaune) :', word: 'OR', distractors: ['OU','EN','UN'] } },
-      { speaker: 'frankie', text: 'Frankie ici ! Je peux te faire une couronne avec mon électricité !', puzzle: { type: 'truefalse', prompt: 'Lis :', sentence: 'Cleo de Nile est une princesse momie.', correct: true } },
+      { speaker: 'frankie', text: 'BZZT BZZT ! C\'est Frankie ! Je peux fabriquer une couronne en or avec mon électricité ! ⚡👑', puzzle: { type: 'truefalse', prompt: 'Lis :', sentence: 'Cleo de Nile est une princesse momie.', correct: true } },
       { speaker: 'cleo', text: 'Je suis REINE ! Toutes mes amies de Monster High m\'applaudissent !' }
     ],
     reward: { emoji: '👑', name: 'La Couronne de Cleo', label: 'Couronne en or avec des hieroglyphes égyptiens.' }
@@ -2111,9 +2456,9 @@ const STORIES = [
     zone: 'addams',
     icon: '🌹',
     scenes: [
-      { speaker: 'morticia', text: 'Bonjour ma chère PRINCESSE. Je m\'appelle Morticia. J\'aime les roses... mais sans pétales.' },
+      { speaker: 'morticia', text: 'Très chère PRINCESSE... 🌹 Je suis Morticia Addams. J\'adore les roses... mais seulement les tiges. C\'est tellement plus élégant.' },
       { speaker: 'morticia', text: 'Je coupe la tête des roses, et je garde la tige. Veux-tu m\'aider ?', puzzle: { type: 'letter', prompt: 'Le mot :', word: 'ROSE', hideIdx: 0, options: ['R','D','B','M'], correct: 'R' } },
-      { speaker: 'gomez', text: 'CARA MIA ! Que tu es belle quand tu coupes les roses !', puzzle: { type: 'choice', prompt: 'Que fait Gomez ?', options: [{ label: '💋 Il embrasse Morticia' }, { label: '💃 Il danse le tango' }] } },
+      { speaker: 'gomez', text: 'CARA MIA !! 💋 Que tu es magnifique quand tu coupes ces roses ! TISH ! Je t\'aime ! PRINCESSE, regarde-la danser !', puzzle: { type: 'choice', prompt: 'Que fait Gomez ?', options: [{ label: '💋 Il embrasse Morticia' }, { label: '💃 Il danse le tango' }] } },
       { speaker: 'morticia', text: 'Mon Gomez... Quelle famille parfaitement étrange. Merci PRINCESSE.' }
     ],
     reward: { emoji: '🌹', name: 'La Rose Noire de Morticia', label: 'Une rose noire sans pétales, juste avec la tige.' },
@@ -2130,7 +2475,7 @@ const STORIES = [
       { speaker: 'etoile', text: 'PRINCESSE ! Tous tes amis sont sur l\'île ! Mercredi, Rumi, Draculaura, tout le monde !' },
       { speaker: 'mercredi', text: 'On organise une grande fête pour TOI. Comment elle s\'appelle ?', puzzle: { type: 'syllable', prompt: 'Touche les syllabes :', word: 'FETE', syllables: ['FE','TE'] } },
       { speaker: 'rumi', text: 'HUNTR/X chante, Saja Boys dansent, La Famille Addams... fait de la magie noire !', puzzle: { type: 'speak', prompt: 'Crie : "Bravo !"', word: 'Bravo', accept: ['bravo','brava','BRAVO'] } },
-      { speaker: 'etoile', text: 'PRINCESSE GINEVRA, REINE DE TOUTE L\'ÎLE ! On t\'aime tous !' }
+      { speaker: 'etoile', text: 'PRINCESSE GINEVRA, REINE DE TOUTE L\'ÎLE !', puzzle: { type: 'readaloud', prompt: 'Lis fièrement à voix haute :', sentence: 'Je suis la reine de l\'île magique !' } }
     ],
     reward: { emoji: '🎉', name: 'Le Trophée de la Reine', label: 'Le trophée d\'or de la Reine de tous les amis de l\'île.' },
     finalLetter: { from: '✨ Tous tes amis (encore plus !)', body: 'CHÈRE REINE GINEVRA ! Mercredi, Rumi, Draculaura, Cleo, Frankie, Morticia, Pugsley, La Chose, Jinu, Mystery, Romance, Baby, Abby, Étoile, Léon et Capitaine Lune. ON T\'AIME TOUS ! Reviens nous voir tous les jours !' }
@@ -2484,6 +2829,7 @@ function updateUI() {
   } else {
     hideMissionBanner();
   }
+  updateVocabBadge();
 }
 
 function onZoneTap(zoneId) {
@@ -2557,15 +2903,17 @@ function renderScene() {
     return `<span class="word" data-word="${tok.text.toLowerCase()}" data-idx="${i}" onclick="readWord(${i}, this)">${tok.text}</span>`;
   }).join(' ').replace(/ <span class="punct">/g, '<span class="punct">');
   document.getElementById('sceneContent').innerHTML = `
-    <div class="speaker-row">
-      <div class="speaker-avatar" style="background: linear-gradient(135deg, ${speaker.color}, white);">${speaker.emoji}</div>
-      <div class="speaker-info">
-        <div class="speaker-name">${speaker.name}</div>
-        <div class="speaker-role">${speaker.role}</div>
-      </div>
+    <div class="character-stage">
+      <div class="character-portrait-wrap">${renderCharacterPortrait(scene.speaker, 120)}</div>
+      <div class="character-nameplate">${speaker.name}</div>
+      <div class="character-role">${speaker.role}</div>
     </div>
-    <div class="story-text" id="storyText">${wordsHtml}</div>
-    <p class="reading-tip">Touche les mots pour les entendre 💖</p>
+    <div class="speech-bubble">
+      <span class="sparkle-deco-1">✨</span>
+      <span class="sparkle-deco-2">⭐</span>
+      <div class="story-text" id="storyText">${wordsHtml}</div>
+      <p class="reading-tip">Touche les mots pour les entendre 💖</p>
+    </div>
     <div id="puzzleArea"></div>
     <div class="continue-area">
       <button class="continue-btn" id="continueBtn" onclick="nextScene()" disabled>Continuer →</button>
@@ -2599,6 +2947,7 @@ function readWord(idx, el) {
     el.dataset.touched = '1';
     el.classList.add('read');
     readWordsCount++;
+    addVocabulary(word);  // Track this word in vocabulary tree
   }
   sndPick();
   setTimeout(() => el.classList.remove('playing'), 800);
@@ -2632,9 +2981,15 @@ let helpTimer1 = null, helpTimer2 = null, helpTimer3 = null;
 function clearHelpTimers() { clearTimeout(helpTimer1); clearTimeout(helpTimer2); clearTimeout(helpTimer3); }
 function startHelpTimers(l1, l2, l3) {
   clearHelpTimers();
-  helpTimer1 = setTimeout(() => l1 && l1(), 6000);
-  helpTimer2 = setTimeout(() => l2 && l2(), 11000);
-  helpTimer3 = setTimeout(() => l3 && l3(), 17000);
+  // Adapt help speed based on placement level
+  // Higher level = slower help (more autonomous), lower level = faster help
+  let mult = 1.0;
+  if (placementLevel === 3) mult = 1.5;       // 9s / 16s / 25s
+  else if (placementLevel === 2) mult = 1.2;  // 7s / 13s / 20s
+  else if (placementLevel === 1) mult = 0.8;  // 5s / 9s / 14s
+  helpTimer1 = setTimeout(() => { if (l1) { l1(); helpUsedCount++; } }, 6000 * mult);
+  helpTimer2 = setTimeout(() => { if (l2) { l2(); helpUsedCount++; } }, 11000 * mult);
+  helpTimer3 = setTimeout(() => { if (l3) { l3(); helpUsedCount++; } }, 17000 * mult);
 }
 function showHelpFairy(text) {
   const existing = document.querySelector('.help-fairy');
@@ -2648,6 +3003,25 @@ function showHelpFairy(text) {
   setTimeout(() => bubble.remove(), 5000);
 }
 
+/* ============================================================
+   CHARACTER PORTRAITS - SVG drawn for each character
+   ============================================================ */
+function renderCharacterPortrait(id, size = 120) {
+  // Carica PNG generato con AI da images/{id}.png
+  // Fallback emoji se l'immagine non c'è (gestito da onerror)
+  const char = CHARACTERS[id];
+  const fallbackEmoji = char ? char.emoji : '?';
+  // Cache buster: forza ricarica nuove immagini
+  const cacheBuster = '?v=2026-05-08';
+  return `<img 
+    src="images/${id}.png${cacheBuster}" 
+    alt="${char ? char.name : id}" 
+    style="width: ${size}px; height: ${size}px; object-fit: cover; object-position: center; border-radius: 50%;"
+    onerror="this.outerHTML='<div style=\\'font-size: ${size * 0.6}px; display: flex; align-items: center; justify-content: center; width: ${size}px; height: ${size}px;\\'>${fallbackEmoji}</div>';"
+  />`;
+}
+
+
 function renderPuzzle(puzzle) {
   const area = document.getElementById('puzzleArea');
   if (!area) return;
@@ -2660,6 +3034,7 @@ function renderPuzzle(puzzle) {
   else if (puzzle.type === 'comprehension') renderComprehensionPuzzle(area, puzzle);
   else if (puzzle.type === 'fillblank') renderFillblankPuzzle(area, puzzle);
   else if (puzzle.type === 'truefalse') renderTruefalsePuzzle(area, puzzle);
+  else if (puzzle.type === 'readaloud') renderReadaloudPuzzle(area, puzzle);
 }
 
 function renderChoicePuzzle(area, p) {
@@ -2706,6 +3081,8 @@ function renderLetterPuzzle(area, p) {
 function checkLetter(btn, correct) {
   clearHelpTimers();
   const ok = btn.dataset.correct === 'true';
+  // Track perfect first answer (no wrong attempts yet)
+  if (ok && !document.querySelector('.letter-opt.wrong')) perfectAnswersCount++;
   document.querySelectorAll('.letter-opt').forEach(b => b.style.pointerEvents = 'none');
   if (ok) {
     btn.classList.add('correct');
@@ -3122,6 +3499,161 @@ function checkTruefalse(btn, correctAnswer) {
 }
 
 /* ============================================================
+   READALOUD puzzle (Ello-style fluency reading)
+   Ginevra reads a sentence aloud, mic listens, words light up green
+   ============================================================ */
+let raState = { sentence: '', words: [], heardWords: [], rec: null, listening: false };
+
+function renderReadaloudPuzzle(area, p) {
+  // p = { sentence: 'Le chat de Zoey s\'appelle Nougat.' }
+  raState.sentence = p.sentence;
+  raState.words = p.sentence.split(/\s+/).filter(w => w.length > 0);
+  raState.heardWords = new Array(raState.words.length).fill(false);
+  const supported = ('webkitSpeechRecognition' in window) || ('SpeechRecognition' in window);
+  
+  area.innerHTML = `
+    <div class="puzzle">
+      <div class="puzzle-prompt">${p.prompt || 'Lis cette phrase à voix haute !'}</div>
+      <div class="ra-instruction">🎤 Touche le micro, puis lis lentement</div>
+      <div class="ra-sentence" id="raSentence">
+        ${raState.words.map((w, i) => `<span class="ra-word" data-i="${i}">${w}</span>`).join(' ')}
+      </div>
+      ${supported ? `
+        <button class="ra-mic-big" id="raMicBtn" onclick="toggleReadaloud()">🎤</button>
+        <div class="mic-status" id="raStatus">Touche le micro et commence à lire !</div>
+      ` : `
+        <button class="continue-btn" onclick="finishReadaloud(true)">J'ai lu !</button>
+      `}
+      <button onclick="speak('${p.sentence.replace(/'/g, "\\'")}', { rate: 0.65 })" class="findword-replay">🔊 Écoute d'abord</button>
+      <button onclick="skipReadaloud()" style="margin-top:0.5rem; background: rgba(0,0,0,0.05); border-radius:999px; padding:0.3rem 0.8rem; font-size:0.78rem; color:var(--purple-deep); border:1px dashed var(--pink-2); font-family:inherit;">Passer</button>
+    </div>
+  `;
+  
+  startHelpTimers(
+    () => showHelpFairy('Touche le micro et lis !'),
+    () => showHelpFairy('Tu peux écouter d\'abord !'),
+    () => speak(p.sentence, { rate: 0.55 })
+  );
+}
+
+function toggleReadaloud() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) return;
+  if (raState.listening) { try { raState.rec.stop(); } catch(e) {} return; }
+  
+  raState.rec = new SR();
+  raState.rec.lang = 'fr-FR';
+  raState.rec.continuous = true;
+  raState.rec.interimResults = true;
+  raState.rec.maxAlternatives = 3;
+  
+  raState.rec.onstart = () => {
+    raState.listening = true;
+    const b = document.getElementById('raMicBtn');
+    if (b) { b.classList.add('listening'); b.textContent = '👂'; }
+    const st = document.getElementById('raStatus');
+    if (st) st.textContent = 'J\'écoute... continue à lire !';
+  };
+  
+  raState.rec.onresult = (event) => {
+    let allHeard = '';
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      allHeard += ' ' + event.results[i][0].transcript;
+    }
+    allHeard = allHeard.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    
+    // Check each target word against what was heard
+    raState.words.forEach((targetWord, i) => {
+      if (raState.heardWords[i]) return;
+      const cleanTarget = targetWord.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z']/g, '');
+      if (cleanTarget.length < 1) {
+        raState.heardWords[i] = true;
+        return;
+      }
+      if (allHeard.includes(cleanTarget) || (cleanTarget.length >= 4 && allHeard.includes(cleanTarget.slice(0, -1)))) {
+        raState.heardWords[i] = true;
+        const wordEl = document.querySelector(`.ra-word[data-i="${i}"]`);
+        if (wordEl && !wordEl.classList.contains('correct')) {
+          wordEl.classList.add('correct');
+          sndPick();
+        }
+      }
+    });
+    
+    // If all heard, finish
+    if (raState.heardWords.every(h => h)) {
+      try { raState.rec.stop(); } catch(e) {}
+      setTimeout(() => finishReadaloud(true), 500);
+    }
+  };
+  
+  raState.rec.onerror = (e) => {
+    raState.listening = false;
+    const b = document.getElementById('raMicBtn');
+    if (b) { b.classList.remove('listening'); b.textContent = '🎤'; }
+    const st = document.getElementById('raStatus');
+    if (st) st.textContent = 'Réessaie !';
+  };
+  
+  raState.rec.onend = () => {
+    raState.listening = false;
+    const b = document.getElementById('raMicBtn');
+    if (b) { b.classList.remove('listening'); b.textContent = '🎤'; }
+    // Check final score
+    const correctCount = raState.heardWords.filter(h => h).length;
+    if (correctCount >= Math.ceil(raState.words.length * 0.6)) {
+      finishReadaloud(false);
+    }
+  };
+  
+  try { raState.rec.start(); } catch(e) { console.error(e); }
+}
+
+function finishReadaloud(perfect) {
+  clearHelpTimers();
+  if (raState.rec && raState.listening) { try { raState.rec.stop(); } catch(e) {} }
+  
+  const correctCount = raState.heardWords.filter(h => h).length;
+  const total = raState.words.length;
+  const score = Math.round((correctCount / total) * 100);
+  
+  // Stars based on score
+  let stars = 1;
+  if (score >= 60) stars = 2;
+  if (score >= 85) stars = 3;
+  
+  const st = document.getElementById('raStatus');
+  if (st) {
+    st.innerHTML = `
+      <div class="ra-score">${perfect ? 'PARFAIT !' : 'Bravo !'} ${correctCount}/${total} mots</div>
+      <div class="ra-stars">
+        ${[1,2,3].map(i => `<span class="${i <= stars ? 'ra-star-filled' : 'ra-star-empty'}">⭐</span>`).join('')}
+      </div>
+    `;
+  }
+  
+  sndCorrect();
+  speak(perfect ? `Bravo ${princessName} ! Tu lis trop bien !` : 'Bravo !');
+  if (document.getElementById('raSentence')) sparkleAt(document.getElementById('raSentence'));
+  
+  // Save vocabulary from this sentence!
+  raState.words.forEach((w, i) => {
+    if (raState.heardWords[i] && w.length >= 3) {
+      addVocabulary(w.toLowerCase().replace(/[^a-zàâäéèêëîïôöùûüç']/gi, ''));
+    }
+  });
+  
+  setTimeout(enableContinue, 1400);
+}
+
+function skipReadaloud() {
+  clearHelpTimers();
+  if (raState.rec && raState.listening) { try { raState.rec.stop(); } catch(e) {} }
+  speak(raState.sentence, { rate: 0.6 });
+  setTimeout(enableContinue, 1500);
+}
+
+/* ============================================================
    SCENE ILLUSTRATION
    ============================================================ */
 function renderSceneIllust(zone, characterId) {
@@ -3146,12 +3678,10 @@ function renderSceneIllust(zone, characterId) {
         background-size: 40px 40px, 60px 60px, 80px 80px;
         animation: glitterMove 30s linear infinite;
       "></div>
-      <div style="position:absolute; top:8%; right:5%; font-size:3rem; opacity:0.8; animation: emojiBob 2s ease-in-out infinite;">${z.deco[0]}</div>
-      <div style="position:absolute; bottom:25%; left:8%; font-size:2.5rem; opacity:0.7; animation: emojiBob 2.5s ease-in-out infinite;">${z.deco[1]}</div>
-      ${char ? `
-        <div style="position:absolute; bottom:25%; left:50%; transform:translateX(-50%); width: 130px; height: 130px; background: linear-gradient(135deg, ${char.color}, white); border-radius: 50%; display:flex; align-items:center; justify-content:center; font-size:4.5rem; box-shadow: 0 0 40px rgba(255,255,255,0.6), 0 0 0 6px rgba(255,255,255,0.5), 0 12px 30px rgba(0,0,0,0.4); animation: avatarBob 2.5s ease-in-out infinite;">${char.emoji}</div>
-        <div style="position:absolute; bottom:14%; left:50%; transform:translateX(-50%); background: rgba(255,255,255,0.95); color: ${char.color}; padding: 4px 14px; border-radius: 999px; font-family: 'Bungee', cursive; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0,0,0,0.3); white-space:nowrap;">${char.name}</div>
-      ` : ''}
+      <div style="position:absolute; top:8%; right:5%; font-size:3rem; opacity:0.7; animation: emojiBob 2s ease-in-out infinite;">${z.deco[0]}</div>
+      <div style="position:absolute; top:18%; left:8%; font-size:2rem; opacity:0.6; animation: emojiBob 2.5s 0.5s ease-in-out infinite;">${z.deco[1]}</div>
+      <div style="position:absolute; top:10%; left:30%; font-size:1.4rem; opacity:0.5; animation: emojiBob 3s 1s ease-in-out infinite;">${z.deco[2] || '✨'}</div>
+
     </div>
   `;
 }
@@ -3165,6 +3695,18 @@ function completeMission() {
     completedMissions.push(currentScene.id);
     localStorage.setItem('completedMissionsI', JSON.stringify(completedMissions));
   }
+  // PLACEMENT TEST: after 1st mission, evaluate level
+  if (completedMissions.length === 1 && placementLevel === 0) {
+    // Score: more perfect = higher level, more help = lower level
+    if (perfectAnswersCount >= 3 && helpUsedCount === 0) placementLevel = 3;
+    else if (perfectAnswersCount >= 2 && helpUsedCount <= 1) placementLevel = 2;
+    else placementLevel = 1;
+    localStorage.setItem('placementLevelI', String(placementLevel));
+    console.log('Placement level set to:', placementLevel);
+  }
+  // Reset session counters
+  helpUsedCount = 0;
+  perfectAnswersCount = 0;
   if (currentScene.reward && !collection.find(c => c.id === currentScene.id)) {
     collection.push({
       id: currentScene.id,
@@ -3313,6 +3855,7 @@ function readLetterWord(el, word) {
   el.classList.add('playing');
   speak(word, { rate: 0.7 });
   sndPick();
+  addVocabulary(word);
   setTimeout(() => el.classList.remove('playing'), 800);
 }
 
@@ -3324,6 +3867,74 @@ function closeLetter() {
 function hidePanels() {
   document.getElementById('treasuresPanel').classList.remove('show');
   document.getElementById('lettersPanel').classList.remove('show');
+  document.getElementById('vocabPanel').classList.remove('show');
+}
+
+function showVocabTree() {
+  hidePanels();
+  document.getElementById('vocabPanel').classList.add('show');
+  renderVocabTree();
+}
+
+function renderVocabTree() {
+  const content = document.getElementById('vocabPanelContent');
+  const words = Object.entries(vocabulary).sort((a, b) => b[1].count - a[1].count);
+  const totalWords = words.length;
+  const masteredWords = words.filter(([w, d]) => d.count >= 3).length;
+  
+  if (totalWords === 0) {
+    content.innerHTML = `<div class="vocab-empty">🌱<br>Ton arbre va pousser<br>chaque fois que tu liras<br>une nouvelle parole !<br><br>Lis une histoire pour commencer 💖</div>`;
+    return;
+  }
+  
+  // SVG tree that grows with vocabulary count
+  const treeSize = Math.min(1 + totalWords / 10, 3); // grows from 1x to 3x
+  const fruits = Math.min(totalWords, 30); // max 30 visible fruits
+  const leavesPositions = [];
+  for (let i = 0; i < fruits; i++) {
+    const angle = (i / fruits) * Math.PI * 2 + Math.random() * 0.3;
+    const radius = 50 + Math.random() * 40;
+    leavesPositions.push({
+      x: 200 + Math.cos(angle) * radius,
+      y: 120 + Math.sin(angle) * radius * 0.8 - 20,
+      color: ['#ff6bb5', '#ffd84a', '#b886ff', '#a8f5d6', '#6df0ff'][i % 5]
+    });
+  }
+  
+  content.innerHTML = `
+    <div class="vocab-tree-wrap">
+      <svg class="vocab-tree-svg" viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg">
+        <!-- Ground -->
+        <ellipse cx="200" cy="265" rx="120" ry="10" fill="rgba(0,0,0,0.3)"/>
+        <ellipse cx="200" cy="255" rx="140" ry="14" fill="#5db080"/>
+        <!-- Trunk -->
+        <path d="M 185 250 Q 188 200 192 180 L 208 180 Q 212 200 215 250 Z" fill="#8b6f3e" stroke="#5d4528" stroke-width="2"/>
+        <!-- Trunk texture lines -->
+        <path d="M 190 240 Q 195 220 192 200" stroke="#5d4528" stroke-width="0.8" fill="none" opacity="0.7"/>
+        <path d="M 205 240 Q 200 220 208 200" stroke="#5d4528" stroke-width="0.8" fill="none" opacity="0.7"/>
+        <!-- Foliage (grows with vocab size) -->
+        <ellipse cx="200" cy="130" rx="${100 * Math.min(treeSize, 1.5)}" ry="${80 * Math.min(treeSize, 1.5)}" fill="#6ed098" stroke="#3a8055" stroke-width="2"/>
+        <ellipse cx="160" cy="120" rx="60" ry="50" fill="#88e0a8" opacity="0.8"/>
+        <ellipse cx="240" cy="120" rx="60" ry="50" fill="#88e0a8" opacity="0.8"/>
+        <ellipse cx="200" cy="95" rx="55" ry="45" fill="#a8f0c8" opacity="0.7"/>
+        <!-- Fruits (one per word) -->
+        ${leavesPositions.map(p => `<circle cx="${p.x}" cy="${p.y}" r="6" fill="${p.color}" stroke="#fff" stroke-width="1.5"><animate attributeName="r" values="6;7;6" dur="2s" repeatCount="indefinite" begin="${Math.random()}s"/></circle>`).join('')}
+        ${totalWords > 30 ? `<text x="320" y="50" font-size="11" fill="#fff" font-family="Bungee">+${totalWords - 30}</text>` : ''}
+        <!-- Sparkles -->
+        <text x="50" y="40" font-size="14">✨</text>
+        <text x="340" y="60" font-size="12">⭐</text>
+        <text x="80" y="200" font-size="10">💖</text>
+      </svg>
+      <div class="vocab-stats">
+        <strong>${totalWords}</strong> mots appris<br>
+        <strong>${masteredWords}</strong> mots maîtrisés (lus 3+ fois)
+      </div>
+      <div class="vocab-list">
+        ${words.slice(0, 50).map(([w, d]) => `<button class="vocab-word ${d.count >= 3 ? 'mastered' : ''}" onclick="speak('${w}', { rate: 0.7 }); sndPick();">${w}</button>`).join('')}
+        ${words.length > 50 ? `<div style="color:white; opacity:0.7;">+${words.length - 50} autres mots...</div>` : ''}
+      </div>
+    </div>
+  `;
 }
 
 /* PARTICLES */
