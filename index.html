@@ -496,11 +496,14 @@
   .scene-illust {
     position: absolute;
     top: 0; left: 0; right: 0;
-    height: 50vh;
+    height: 28vh;  /* Reduced from 50vh - too much sfondo on desktop */
     background-size: cover;
     background-position: center;
     z-index: 1;
     overflow: hidden;
+  }
+  @media (orientation: portrait) and (max-width: 800px) {
+  /* On iPad portrait, more sfondo OK */
   }
   .scene-illust-svg {
     width: 100%;
@@ -1778,7 +1781,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="version" content="2026-05-08-portraits-v1">
+<meta name="version" content="2026-05-13-layout-fixed">
 </head>
 <body>
 
@@ -3012,9 +3015,9 @@ function renderCharacterPortrait(id, size = 120) {
   const char = CHARACTERS[id];
   const fallbackEmoji = char ? char.emoji : '?';
   // Cache buster: forza ricarica nuove immagini
-  const cacheBuster = '?v=2026-05-08';
+  const cacheBuster = '?v=2026-05-13-fixed2';
   return `<img 
-    src="images/${id}.png${cacheBuster}" 
+    src="${id}.png${cacheBuster}" 
     alt="${char ? char.name : id}" 
     style="width: ${size}px; height: ${size}px; object-fit: cover; object-position: center; border-radius: 50%;"
     onerror="this.outerHTML='<div style=\\'font-size: ${size * 0.6}px; display: flex; align-items: center; justify-content: center; width: ${size}px; height: ${size}px;\\'>${fallbackEmoji}</div>';"
