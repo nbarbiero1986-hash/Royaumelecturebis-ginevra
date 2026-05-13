@@ -516,13 +516,13 @@
     position: relative;
     z-index: 2;
     width: 100%;
-    max-width: 560px;
+    max-width: 720px;     /* Wider for impact */
     background: linear-gradient(135deg, rgba(255,255,255,0.97), rgba(255,228,243,0.95));
     backdrop-filter: blur(10px);
-    border-radius: 28px;
-    box-shadow: 0 20px 60px rgba(40,15,70,0.6), 0 0 0 2px rgba(255,255,255,0.6);
-    padding: 4rem 1.3rem 1.2rem;  /* Extra top padding for portrait overlap */
-    max-height: 90vh;
+    border-radius: 32px;
+    box-shadow: 0 25px 70px rgba(40,15,70,0.7), 0 0 0 3px rgba(255,255,255,0.7);
+    padding: 6rem 2rem 1.5rem;  /* Bigger top padding for larger portrait */
+    max-height: 92vh;
     overflow-y: auto;
     animation: panelSlide 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
@@ -605,12 +605,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: -4.5rem auto 0;  /* Overlap with panel top edge */
+    margin: -7rem auto 0.5rem;  /* Overlap with panel top - bigger portrait needs more */
     padding-bottom: 0.5rem;
   }
   .character-portrait-wrap {
-    width: 140px;
-    height: 140px;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
     background: linear-gradient(135deg, rgba(255,255,255,0.98), rgba(255,228,243,0.95));
     border: 5px solid white;
@@ -666,22 +666,23 @@
     50% { transform: scale(1.3) rotate(180deg); opacity: 1; }
   }
   .character-nameplate {
-    margin-top: -0.4rem;
+    margin-top: -0.6rem;
     background: linear-gradient(135deg, var(--pink-3), var(--pink-deep));
     color: white;
-    padding: 0.3rem 1rem;
+    padding: 0.5rem 1.4rem;
     border-radius: 999px;
     font-family: 'Bungee', cursive;
-    font-size: 0.95rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.4), 0 0 0 3px white;
+    font-size: 1.25rem;
+    box-shadow: 0 5px 14px rgba(0,0,0,0.4), 0 0 0 3px white;
     white-space: nowrap;
     text-shadow: 1px 1px 0 var(--purple-deep);
+    letter-spacing: 0.05em;
   }
   .character-role {
-    margin-top: 0.3rem;
+    margin-top: 0.4rem;
     font-family: 'Caveat', cursive;
     color: var(--purple-deep);
-    font-size: 0.95rem;
+    font-size: 1.1rem;
     font-style: italic;
   }
 
@@ -691,10 +692,11 @@
     background: white;
     border: 3px solid var(--pink-3);
     border-radius: 22px;
-    padding: 1rem 1.1rem 0.9rem;
-    margin: 1rem 0 0.5rem;
-    box-shadow: 0 6px 20px rgba(255,107,181,0.3), 0 0 0 2px rgba(255,255,255,0.5);
+    padding: 1.3rem 1.4rem 1.1rem;
+    margin: 1.2rem 0 0.5rem;
+    box-shadow: 0 8px 24px rgba(255,107,181,0.35), 0 0 0 2px rgba(255,255,255,0.6);
     animation: bubbleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    font-size: 1.05em;
   }
   @keyframes bubbleIn {
     0% { transform: scale(0.6); opacity: 0; }
@@ -1796,7 +1798,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="version" content="2026-05-13-centered-v3">
+<meta name="version" content="2026-05-13-bigger-v4">
 </head>
 <body>
 
@@ -2922,7 +2924,7 @@ function renderScene() {
   }).join(' ').replace(/ <span class="punct">/g, '<span class="punct">');
   document.getElementById('sceneContent').innerHTML = `
     <div class="character-stage">
-      <div class="character-portrait-wrap">${renderCharacterPortrait(scene.speaker, 120)}</div>
+      <div class="character-portrait-wrap">${renderCharacterPortrait(scene.speaker, 180)}</div>
       <div class="character-nameplate">${speaker.name}</div>
       <div class="character-role">${speaker.role}</div>
     </div>
